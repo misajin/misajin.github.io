@@ -1,0 +1,423 @@
+@charset "UTF-8";
+
+/* 変数を登録 */
+:root{
+--header--fooder_color:#ffffff;
+--nav--col-3-txt_color:#000000;
+--content-txt1-3_color:#f4dd9f;
+--col-1_color:#f4ed9f;
+}
+
+html{box-sizing:border-box;-webkit-text-size-adjust:100%}*,:after,:before{background-repeat:no-repeat;box-sizing:inherit}:after,:before{text-decoration:inherit;vertical-align:inherit}*{padding:0;margin:0;box-sizing:border-box;}audio:not([controls]){display:none;height:0}hr{overflow:visible}article,aside,details,figcaption,figure,footer,header,main,menu,nav,section,summary{display:block}summary{display:list-item}small{font-size:80%}[hidden],template{display:none}abbr[title]{border-bottom:1px dotted;text-decoration:none}a{background-color:transparent;-webkit-text-decoration-skip:objects}a:active,a:hover{outline-width:0}code,kbd,pre,samp{font-family:monospace,monospace}b,strong{font-weight:bolder}dfn{font-style:italic}mark{background-color:#ff0;color:#000}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}input{border-radius:0}[role=button],[type=button],[type=reset],[type=submit],button{cursor:pointer}[disabled]{cursor:default}[type=number]{width:auto}[type=search][type=search]::-webkit-search-cancel-button,[type=search]::-webkit-search-decoration{-webkit-appearance:none}textarea{overflow:auto;resize:vertical}button,input,optgroup,select,textarea{font:inherit}optgroup{font-weight:700}button{overflow:visible}[type=button]::-moz-focus-inner,[type=reset]::-moz-focus-inner,[type=submit]::-moz-focus-inner,button::-moz-focus-inner{border-style:0;padding:0}[type=button]::-moz-focus-inner,[type=reset]::-moz-focus-inner,[type=submit]::-moz-focus-inner,button:-moz-focusring{outline:1px dotted}[type=reset],[type=submit],button,html [type=button]button,select{text-transform:none}button,input,select,textarea{background-color:transparent;border-style:none;color:inherit}select::-ms-expand{display:none}select::-ms-value{color:currentColor}legend{border:0;color:inherit;display:table;max-width:100%;white-space:normal}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}[type=search]img{border-style:none;vertical-align: bottom}progress{vertical-align:baseline}svg:not(:root){overflow:hidden}audio,canvas,progress,video{display:inline-block}@media screen{[hidden~=screen]{display:inherit}[hidden~=screen]:not(:active):not(:focus):not(:target){position:absolute!important;clip:rect(0 0 0 0)!important}}[aria-busy=true]{cursor:progress}[aria-controls]{cursor:pointer}[aria-disabled]{cursor:default}::-moz-selection{background-color:#b3d4fc;color:#000;text-shadow:none}::selection{background-color:#b3d4fc;color:#000;text-shadow:none}ul,ol{list-style:none;}a{text-decoration:none;}img{max-width: 100%;vertical-align: bottom;}
+
+body{
+background-color: #d3d2d2;
+font-family: "Playfair Display", serif;
+color: #222;
+overflow-x: hidden;
+}
+/* spレイアウト */
+header{
+width: 100%;
+height: 60px;
+padding: 0 10px;
+background-color: var(--header--fooder_color);
+display: flex;
+gap: 10px;
+justify-content: space-between;
+align-items: center;
+position: static;/* 上に固定のままスクロールしても画像が潜り込まない！ */
+top: 0;
+left: 0;
+z-index: calc(infinity);/* z-indexは重なり順を命令するときに使用する z-index: calc(infinity);は重なり順が一番上にくる*/
+@media (min-width:900px){
+		height: 100px;
+}
+}
+h1{
+	width: 50%;
+	height: 30px;
+	background: url(../img/logo.svg) no-repeat left center/contain;/* X軸(横軸)を左にしたい */
+	/* ↑coverは全てを覆う為はみ出るcontainは絶対はみ出ないが覆えない場所が出てくる */
+			/* ↓文字を消す命令３点セット */
+			text-indent: 100%;/* 右隣に一個分ずらす */
+			white-space: nowrap;/* 改行をしない命令 */
+			overflow: hidden;/* 隠す */
+	filter: drop-shadow(2px 2px 2px #ff9100);
+	@media (min-width:900px){
+		width: 100%;
+		height: 70px;
+		background: url(../img/logo.svg) no-repeat center center/contain;
+	}
+}
+#ham-btn{
+width: 44px;
+height: 44px;
+/* border: 2px solid #222;　あってもなくてもいい！デザインに合わせる！ */
+position: relative;
+	>span{
+	display: block;
+	width: 20px;
+	height: 2px;
+	background-color: #222;
+	position: absolute;
+	inset: 0;
+	margin: auto;
+	top: -12px;
+	transition: 0.2s;
+
+		&::after{
+		display: block;
+		content: "";
+		width: 20px;
+		height: 2px;
+		background-color: #222;
+		position: absolute;
+		top: 12px;
+		transition: 0.2s;
+		}
+	}
+	&.is-active>span{
+	top: 0;
+	rotate: 45deg;
+	
+	&::after{
+		top: 0;
+		rotate: 270deg;
+	}
+	}
+	@media (min-width:900px){
+		display: none;/* 要素を非表示 */
+	}
+}
+
+/* ナビゲーション */
+#pc-nav{
+	display: none;
+	@media (min-width:900px){
+		width: 100%;
+		display: block;
+		height: 70px;
+		background-color: var(--nav--col-3-txt_color);
+		position: sticky;/* スクロールしたら吸い付くように固定される */
+		top: 0;/* position: sticky;で固定される位置 */
+		>ul{
+			font-size: 20px;
+			display: flex;
+			justify-content: center;
+			height: 70px;
+			align-items: center;/* heightの指定をしていないと命令できない */
+			gap: 0 30px;
+			a{
+				overflow: hidden;
+				display: block;
+				padding: 10px 16px;
+				color: #ffffff;
+				position: relative;
+				&::after{
+					display: block;
+					content: "";
+					width: 100%;
+					height: 8px;
+					background-color: #67c83d;
+					position: absolute;
+					inset: 0;
+					margin: auto;
+					top: 40px;
+					/* ↓scaleは中心から出てくる　translateは左から出てくる↓ */
+					/* scale: 0; */
+					translate: -110% 0;/* ホバー前は左にずらす　aにoverflow: hidden;の命令で隠す */
+					transition: 0.2s;
+				}
+				&:hover::after{
+					/* scale: 1; */
+					translate: 0 0;/* ホバー後は戻す */
+				}
+			}
+		}
+		
+	}
+}
+/* sp用ナビ */
+#g-nav{
+/* display: none; */
+width: 100%;
+height: calc(100vh - 60px);
+background-color: var(--nav--col-3-txt_color);
+position: fixed;
+top: 60px;
+left: 0;
+z-index: calc(infinity);
+padding: 50px 20px;
+translate: 100% 0;/* translate→移動　最初から100%にすると全て消えてしまう為最初は80％と入力して確認する */
+	li {
+	margin-bottom: 10px;
+	>a{
+		display: block;
+		padding: 15px 0 15px 15px;
+		color: #ffffff;
+		border-bottom: 2px solid #ffffff;
+	}
+	}
+	&.move{ /* g-navに.moveが付いたとき */
+	translate: 0 0;
+	transition: 0.2s;
+	}
+	@media (min-width:900px){
+		display: none;/* 要素を非表示に！ */
+	}
+}
+
+/* メイン部分 */
+main{
+padding: 10px 10px 0;
+}
+.content-wrapper{
+margin-bottom: 100px;
+/* 	&:nth-of-type(2)>.content-txt{
+	background-color: yellow;
+	}　二つ目のラッパーの色を変えたい時の命令 */
+	@media (min-width:680px){
+		display: flex;
+		justify-content: space-between;
+		&:nth-of-type(even){ /* even→偶数のみを指定 */
+			flex-direction: row-reverse; 
+		}
+	}
+	
+
+	}
+.content-img{
+height: 45vh;
+margin-bottom: 10px;
+	>img{
+	object-fit: cover;
+	width: 100%;
+	height: 100%;
+	}
+	@media (min-width:680px){
+		width: calc((100% - 20px) / 3 * 2 + 10px);
+		height: 90vh;
+		margin-bottom: 0;
+	};
+}
+.content-txt{
+background-color: var(--content-txt1-3_color);
+height: calc((100vh - 90px) - 45vh);
+display: flex;
+flex-direction: column;
+justify-content: center;
+text-align: center;
+>h2{
+	margin-bottom: 20px;
+}
+>p{
+	padding: 0 20px;
+	line-height: 1.8;
+}
+@media (min-width:680px){
+	width: calc((100% - 20px) /3);
+	height: auto;
+};
+}
+/* col-1部分 */
+.col-1{
+	margin-bottom: 10px;
+	background-color: var(--col-1_color);
+	padding: 20vh 20px;
+	text-align: center;
+	line-height: 1.8;
+	>h2{
+		margin-bottom: 40px;
+	}
+	>.txt{
+		margin-bottom: 20px;
+	}
+}
+/* col-3部分 */
+@media (min-width:900px){
+	.col-3-wrapper{
+		display: flex;
+		gap: 0 10px;
+		>.col-3-box{
+			width: calc((100% - 20px) / 3);
+		}
+	}
+};
+
+
+
+
+.col-3-box{
+	margin-bottom: 10px;
+	&:nth-of-type(2) .icon{
+	background: #ffffff url(../img/02.svg) no-repeat center center/50px;
+	}
+	&:nth-of-type(3) .icon{
+	background: #ffffff url(../img/03.svg) no-repeat center center/50px;
+	}
+}
+.col-3-img{
+	height: 35vh;
+	>img{
+		object-fit: cover;
+		width: 100%;
+		height: 100%;
+	}
+	@media (min-width:680px){
+		width: 50%;
+		height: 80vh;
+	}
+	@media (min-width:900px){
+		width: 100%;
+		height: 40vh;
+	}
+}
+.col-3-txt{
+	height: 320px;
+	color: var(--header--fooder_color);
+	background-color: var(--nav--col-3-txt_color);
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	text-align: center;
+	>h3{
+		margin-bottom: 20px;
+		font-size: 26px;
+	}
+	.icon{
+		width: 80px;
+		height: 80px;
+		border-radius: 50%;
+		margin: 0 auto 20px;
+		background: #ffffff url(../img/01.svg) no-repeat center center/50px;
+		/* ↓家具のアイコンという文字を消す命令３点セット */
+		text-indent: 100%;/* 右に一個分ずれる */
+		white-space: nowrap;/* 改行をしない命令 */
+		overflow: hidden;/* 隠す */
+	}
+
+	@media (min-width:680px){
+		width: 50%;
+		height: auto;/* heightはautoにすると大きいほうに合う */
+	}
+	@media (min-width:900px){
+		width: 100%;
+		height: 340px;
+	}
+}
+
+
+
+/* ボタンスタイル */
+.to-more{
+width: 50%;
+margin: 0 auto;
+background-color: #d1d1d1;
+border-radius: 100px;/* 固定値(px)で大きい数値を入れると楕円長方形ができる */
+	a{
+	display: block;
+	padding: 16px 0;
+	color: #222;
+		&::after{
+		display: inline-block;
+		content: "";
+		width: 12px;
+		height: 12px;
+			border-top: 2px solid #222;
+			border-right: 1px solid #222 ;
+			rotate: 45deg;
+			margin-left: 20px;
+		}
+	}
+}
+
+/* お申し込みボタン */
+.to-form>a{
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	position: relative;
+	margin: 10px auto;
+	padding: 1em 2em;
+	width: 250px;
+	color: #333;
+	font-size: 16px;
+	font-weight: 700;
+	background-color: #96f66e;
+	transition: 0.3s;
+}
+	
+	.to-form>a::before {
+		content: '';
+		position: absolute;
+		top: -5px;
+		left: -5px;
+		width: calc(100% - 4px);
+		height: calc(100% - 4px);
+		border: 2px solid #67c83d;
+		transition: 0.2s;
+	}
+	
+	.to-form>a::after {
+		content: '';
+		width: 5px;
+		height: 5px;
+		border-top: 3px solid #333333;
+		border-right: 3px solid #333333;
+		transform: rotate(45deg);
+	}
+	
+	.to-form>a:hover::before {
+		top: 0;
+		left: 0;
+	}
+	
+	.to-form>a:hover {
+		text-decoration: none;
+		background-color: rgb(184, 255, 154);
+	}
+
+footer{
+	background-color: var(--header--fooder_color);
+	padding: 40px 0;
+	margin: 0 10px 10px;
+	>p{
+		text-align: center;
+		font-size: 16px;
+	}
+}
+.col-3-box{
+	@media (min-width:680px){
+		display: flex;
+	}
+} 
+
+/* ローディングアニメーション */
+#curtain{
+	width: 100%;
+	height: 100vh;
+	background-color: var(--header--fooder_color);
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: calc(infinity);
+}
+#logo-box{
+	max-width: 1000px;
+	margin: 200px auto 0;
+	 path{
+		fill: var(--header--fooder_color);/* 塗りの色 */
+		stroke: #222;/* 線の色 */
+		filter: drop-shadow(2px 2px 2px #ff9100);
+		stroke-dasharray: 370px;
+		stroke-dashoffset: 370px;
+		animation: svg 1.8s 0.5s linear forwards;/* 名前を付ける アニメーション速度 ページが開かれてアニメーションが始まるまでの秒数 一定速度を指定 最初の状態に戻らない指定 */
+	 }
+}
+
+@keyframes svg {
+	0%{stroke-dashoffset: 370px;}
+	80%{stroke-dashoffset: 0; fill: var(--header--fooder_color);}
+	100%{stroke-dashoffset: 0%; fill: #222;}
+}

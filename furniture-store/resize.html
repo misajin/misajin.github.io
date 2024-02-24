@@ -1,0 +1,58 @@
+ <!DOCTYPE html>
+ <html lang="ja">
+ <head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>resizeイベントの設定</title>
+	<style>
+		body{
+			background-color: rgb(190, 255, 134);
+		}
+		body.move{
+			background-color: rgb(135, 159, 255);
+		}
+	</style>
+</head>
+ <body>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js' integrity='sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==' crossorigin='anonymous'></script>
+	<script>
+$(function(){
+	//resizeとloadイベントの設定(複数を設定する場合の入力方法)
+	$(window).on('resize load',function(){/* .onはグループと考える */
+	//幅が変わった時だけ命令するように設定したい…
+	//resize前の幅を取得
+	let windowWidth = $(window).width();
+	//resizeとloadイベントの設定
+	$(window).on('resize load',function(){
+		//resize後の幅を取得
+		let ww = $(window).width();
+		//windowWidthとwwが一致しなかったら
+		if(windowWidth != ww){
+		//900px以上になったらaddClassする
+/* 			if(window.matchMedia('(min-width: 900px)').matches){ */
+/* 		if(windowWidth != ww){ */
+
+		if(window.matchMedia('(min-width:900px)').matches){
+		$('body').addClass('move');/* もし900px以上になったらbodyにclassのmoveを付ける */
+		}else{
+			$('body').removeClass('move');/* 900pxでない場合bodyに付けたclassのmoveを削除する */
+		}
+		windowWidth = ww;
+		}
+		}
+		});
+	});
+
+
+
+				
+$('#g-nav').removeClass('move');
+$('#ham-btn').removeClass('is-active');
+}
+windowWidth = ww;
+}
+});
+
+	</script>
+ </body>
+ </html>
